@@ -1,7 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
+using Unity.VisualScripting;
 using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 
 public class FirstPersonController : MonoBehaviour
 {
@@ -21,7 +25,10 @@ public class FirstPersonController : MonoBehaviour
         float xRot = Input.GetAxis("Mouse X") * MouseSensitivity;
         float yRot = -Input.GetAxis("Mouse Y") * MouseSensitivity;
         transform.Rotate(0,xRot,0);
-        Eyes.transform.Rotate(yRot,0,0);
+        float yR = transform.rotation.eulerAngles.x;
+        yR += yRot;
+        yR = Mathf.Clamp(yR, -75, 80);
+        Eyes.transform.rotation = Quaternion.Euler(yR,transform.rotation.y,transform.rotation.z);
 
         if (WalkSpeed > 0)
         {

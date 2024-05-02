@@ -13,11 +13,14 @@ public class grasscont : MonoBehaviour
         transform.localScale = new Vector3(transform.localScale.x, Random.Range(0.2f,0.6f), transform.localScale.z);
         pos = transform.localScale.y;
         mowscript.God.MC.grasses.Add(this);
+        StartCoroutine(Growback());
     }
 
     public void mow()
     {
+        StopCoroutine(Growback());
         pos = 0.1f;
+        StartCoroutine(Growback());
     }
 
     public void Update()
@@ -27,10 +30,11 @@ public class grasscont : MonoBehaviour
     
     public IEnumerator Growback()
     {
-        while (pos > -0.05f)
+        Debug.Log("called");
+        while (pos <= 2)
         {
-            Mathf.Lerp(pos, 0, 1);
-            yield return new WaitForSeconds(3);
+           pos += Random.Range(0.0005f, 0.001f);
+           yield return new WaitForSeconds(Random.Range(1,4));
         }
     }
     
