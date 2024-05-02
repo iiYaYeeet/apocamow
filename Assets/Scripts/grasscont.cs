@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 public class grasscont : MonoBehaviour
 {
     public float pos;
+    public ParticleSystem PS;
     public void Start()
     {
         //get scale
@@ -25,6 +26,8 @@ public class grasscont : MonoBehaviour
         StopCoroutine(Growback());
         //cut
         pos = 0.1f;
+        //emit particles
+        PS.Emit(3);
         //start grow again
         StartCoroutine(Growback());
     }
