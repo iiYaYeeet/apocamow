@@ -9,6 +9,7 @@ public class grasscont : MonoBehaviour
 {
     public float pos;
     public ParticleSystem PS;
+    public bool cuttable;
     public void Start()
     {
         //get scale
@@ -22,14 +23,18 @@ public class grasscont : MonoBehaviour
 
     public void mow()
     {
-        //stop previous grow, get rid of loop
-        StopCoroutine(Growback());
-        //cut
-        pos = 0.1f;
-        //emit particles
-        PS.Emit(3);
-        //start grow again
-        StartCoroutine(Growback());
+        if (cuttable == false)
+        {
+            //stop previous grow, get rid of loop
+            StopCoroutine(Growback());
+            //cut
+            pos = 0.1f;
+            //emit particles
+            PS.Emit(3);
+            //start grow again
+            StartCoroutine(Growback());
+            cuttable = true;
+        }
     }
 
     public void Update()
@@ -48,5 +53,9 @@ public class grasscont : MonoBehaviour
             yield return new WaitForSeconds(Random.Range(1,4));
         }
     }
-    
+
+    public IEnumerator waittogrow()
+    {
+        yield return new WaitForSeconds(Random.Range(3, 6));
+    }
 }
