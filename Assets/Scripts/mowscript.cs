@@ -5,7 +5,8 @@ using UnityEngine;
 public class mowscript : MonoBehaviour
 {
     //list
-    public List<grasscont> grasses;   
+    public List<grasscont> grasses;
+    public List<nukecont> nukes; 
 
     //gamemanager declare 
     public static class God
@@ -17,7 +18,6 @@ public class mowscript : MonoBehaviour
     void Awake()
     {
         God.MC = this;
-        Debug.Log(God.MC);
     }
     void Update()
     {
@@ -46,6 +46,14 @@ public class mowscript : MonoBehaviour
             }
             //cut closest grass
             t.mow();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            foreach (nukecont N in nukes)
+            {
+                N.detonate();
+            }
         }
     }
 }

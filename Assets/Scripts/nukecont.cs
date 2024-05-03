@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -10,7 +11,14 @@ public class nukecont : MonoBehaviour
     public GameObject cloud;
     public MeshRenderer MR;
     public ParticleSystem PS;
-    void Start()
+
+    public void Start()
+    {
+        mowscript.God.MC.nukes.Add(this);
+    }
+    
+
+    public void detonate()
     {
             flash.enabled = true;
             halo.enabled = true;
@@ -24,6 +32,7 @@ public class nukecont : MonoBehaviour
     }
     public IEnumerator pop()
     {
+        yield return new WaitForSeconds(1);
         while (flash.range <= 100000)
         {
             Debug.Log("called");
@@ -36,11 +45,12 @@ public class nukecont : MonoBehaviour
         }
         var emissionModule = PS.emission;
         emissionModule.enabled = false;
-        while (halo.range >= 1)
+        yield return new WaitForSeconds(2);
+        while (halo.intensity >= 1)
         {
-            Mathf.Lerp(halo.range, 0, 1);
-            cloud.transform.localScale = new Vector3(cloud.transform.localScale.x / 1.1f,
-                cloud.transform.localScale.y / 1.1f, cloud.transform.localScale.z / 1.2f);
+            Mathf.Lerp(halo.intensity, 0, 1);
+            cloud.transform.localScale = new Vector3(cloud.transform.localScale.x / 1.001f,
+                cloud.transform.localScale.y / 1.001f, cloud.transform.localScale.z / 1.01f);
             yield return null;
         }
     }
