@@ -10,6 +10,9 @@ public class grasscont : MonoBehaviour
     public float pos;
     public ParticleSystem PS;
     public bool cuttable;
+    public bool growing;
+
+    public bool Tester = false;
     public void Start()
     {
         //get scale
@@ -23,17 +26,21 @@ public class grasscont : MonoBehaviour
 
     public void mow()
     {
-        if (cuttable == false)
+        if (cuttable == true)
         {
-            //stop previous grow, get rid of loop
-            StopCoroutine(Growback());
+            if(Tester) Debug.Log("MOW");
+            growing = false;
             //cut
             pos = 0.1f;
             //emit particles
             PS.Emit(3);
             //start grow again
-            StartCoroutine(Growback());
-            cuttable = true;
+            if (growing == false)
+            {
+                StartCoroutine(Growback());
+            }
+            cuttable = false;
+            mowscript.God.MC.tootallgrass.Remove(this);
         }
     }
 
@@ -45,17 +52,17 @@ public class grasscont : MonoBehaviour
     
     public IEnumerator Growback()
     {
+        yield return new WaitForSeconds(Random.Range(2, 4));
+        growing = true;
         //if shorter than 2
         while (pos <= 2)
         {
+            if (!growing) yield break;
             //grow at random amount and random time
-            pos += Random.Range(0.0005f, 0.001f);
-            yield return new WaitForSeconds(Random.Range(1,4));
+            pos += Random.Range(0.005f, 0.015f);
+            cuttable = true;
+            yield return new WaitForSeconds(Random.Range(1,1.75f));
         }
-    }
-
-    public IEnumerator waittogrow()
-    {
-        yield return new WaitForSeconds(Random.Range(3, 6));
+        mowscript.God.MC.tootallgrass.Add(this);
     }
 }

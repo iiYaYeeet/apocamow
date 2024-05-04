@@ -14,10 +14,12 @@ public class nukecont : MonoBehaviour
     public ParticleSystem PS;
     public GameObject cam;
     public float shakeamount;
+    public Rigidbody house,fan;
 
     public void Start()
     {
         mowscript.God.MC.nukes.Add(this);
+        transform.position = new Vector3(Random.Range(-200, 200), 2, Random.Range(-200, 200));
     }
     
 
@@ -33,6 +35,9 @@ public class nukecont : MonoBehaviour
             PS.Emit(500);
             shakeamount = 0.2f;
             StartCoroutine(pop());
+            house.AddForce(100,50,-5,ForceMode.Impulse);
+            fan.AddForce(100,50,-5,ForceMode.Impulse);
+            
     }
     public IEnumerator pop()
     {

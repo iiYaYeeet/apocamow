@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class mowscript : MonoBehaviour
 {
     //list
     public List<grasscont> grasses;
+    public List<grasscont> tootallgrass;
     public List<nukecont> nukes; 
+    public List<planecont> planes;
+    public bool dropped;
 
     //gamemanager declare 
     public static class God
@@ -48,12 +52,24 @@ public class mowscript : MonoBehaviour
             t.mow();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (tootallgrass.Count >= 50)
         {
-            foreach (nukecont N in nukes)
+            if (dropped == false)
             {
-                N.detonate();
+                foreach (planecont P in planes)
+                {
+                    P.flyby();
+                    dropped = true;
+                }
             }
+        }
+    }
+
+    public void bombdeto()
+    {
+        foreach (nukecont N in nukes)
+        {
+            N.detonate();
         }
     }
 }
