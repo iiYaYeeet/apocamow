@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -11,7 +12,11 @@ public class mowscript : MonoBehaviour
     public List<nukecont> nukes; 
     public List<planecont> planes;
     public bool dropped;
-    public AudioSource Bomb1, Bomb2, Plane1, Plane2;
+    public AudioSource Bomb1, Bomb2, Plane1, Plane2, Mower;
+    public AudioClip offgrass;
+    public AudioClip ongrass;
+    public bool enginestarted;
+    public bool onfield;
 
     //gamemanager declare 
     public static class God
@@ -23,6 +28,7 @@ public class mowscript : MonoBehaviour
     void Awake()
     {
         God.MC = this;
+        Mower.Play();
     }
     void Update()
     {
@@ -39,7 +45,7 @@ public class mowscript : MonoBehaviour
             //get dist
             float dist = Vector3.Distance(transform.position, t.transform.position);
             //if its 1.5 away, cont
-            if (dist < 2) continue;
+            if (dist < 1.2) continue;
             //if closer then current closest, set as closest
             if (dist < bestN)
             {
@@ -47,6 +53,22 @@ public class mowscript : MonoBehaviour
             }
             //cut closest grass
             t.mow();
+        }
+        if (Mower.isPlaying == false)
+        {
+            enginestarted = true;
+            Mower.Play();
+        }
+        if (enginestarted == true)
+        {
+            if (onfield == false)
+            {
+                Mower.clip = offgrass;
+            }
+            if (onfield == true)
+            {
+                Mower.clip = ongrass;
+            }
         }
 
         if (tootallgrass.Count >= 50)
@@ -62,6 +84,15 @@ public class mowscript : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        onfield = true;
+    }
+    public void OnTriggerExit(Collider other)
+    {
+        onfield = false;
     }
 
     public void bombdeto()

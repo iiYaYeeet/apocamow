@@ -41,10 +41,10 @@ public class nukecont : MonoBehaviour
     }
     public IEnumerator pop()
     {
-        yield return new WaitForSeconds(1);
-        while (flash.range <= 100000)
+        yield return new WaitForSeconds(2);
+        while (flash.range <= 20000)
         {
-            flash.range *= 1.5f;
+            flash.range *= 1.3f;
             cloud.transform.localScale = new Vector3(cloud.transform.localScale.x * 1.1f,
                 cloud.transform.localScale.y * 1.1f, cloud.transform.localScale.z * 1.1f);
             yield return null;
