@@ -59,7 +59,7 @@ public class grasscont : MonoBehaviour
         {
             if (!growing) yield break;
             //grow at random amount and random time
-            pos += Random.Range(0.005f, 0.015f);
+            pos += Random.Range(0.055f, 0.055f);
             cuttable = true;
             yield return new WaitForSeconds(Random.Range(1,1.75f));
         }

@@ -11,6 +11,7 @@ public class mowscript : MonoBehaviour
     public List<nukecont> nukes; 
     public List<planecont> planes;
     public bool dropped;
+    public AudioSource Bomb1, Bomb2;
 
     //gamemanager declare 
     public static class God
@@ -70,6 +71,8 @@ public class mowscript : MonoBehaviour
         foreach (nukecont N in nukes)
         {
             N.detonate();
+            Bomb1.Play();
+            Bomb2.Play();
         }
     }
 }
