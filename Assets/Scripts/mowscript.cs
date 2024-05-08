@@ -11,7 +11,7 @@ public class mowscript : MonoBehaviour
     public List<nukecont> nukes; 
     public List<planecont> planes;
     public bool dropped;
-    public AudioSource Bomb1, Bomb2;
+    public AudioSource Bomb1, Bomb2, Plane1, Plane2;
 
     //gamemanager declare 
     public static class God
@@ -36,14 +36,10 @@ public class mowscript : MonoBehaviour
                 t.transform.position.z <= transform.position.z - 2f) continue;
             if (t.transform.position.x >= transform.position.x + 2f ||
                 t.transform.position.x <= transform.position.x - 2f) continue;
-            //offset get
-            Vector3 offset = t.transform.position - transform.position;
-            //if its further up then down , cont
-            if (Mathf.Abs(offset.x) > Mathf.Abs(offset.y)) continue;
             //get dist
             float dist = Vector3.Distance(transform.position, t.transform.position);
             //if its 1.5 away, cont
-            if (dist < 1.5) continue;
+            if (dist < 2) continue;
             //if closer then current closest, set as closest
             if (dist < bestN)
             {
@@ -60,6 +56,8 @@ public class mowscript : MonoBehaviour
                 foreach (planecont P in planes)
                 {
                     P.flyby();
+                    Plane1.Play();
+                    Plane2.Play();
                     dropped = true;
                 }
             }

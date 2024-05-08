@@ -11,8 +11,6 @@ public class grasscont : MonoBehaviour
     public ParticleSystem PS;
     public bool cuttable;
     public bool growing;
-
-    public bool Tester = false;
     public void Start()
     {
         //get scale
@@ -28,7 +26,6 @@ public class grasscont : MonoBehaviour
     {
         if (cuttable == true)
         {
-            if(Tester) Debug.Log("MOW");
             growing = false;
             //cut
             pos = 0.1f;
@@ -59,7 +56,7 @@ public class grasscont : MonoBehaviour
         {
             if (!growing) yield break;
             //grow at random amount and random time
-            pos += Random.Range(0.055f, 0.055f);
+            pos += Random.Range(0.005f, 0.015f);
             cuttable = true;
             yield return new WaitForSeconds(Random.Range(1,1.75f));
         }
