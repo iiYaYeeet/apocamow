@@ -52,15 +52,8 @@ public class nukecont : MonoBehaviour
         var emissionModule = PS.emission;
         emissionModule.enabled = false;
         cam.transform.localPosition = Vector3.zero;
-        yield return new WaitForSeconds(2);
-        while (halo.intensity >= 1)
-        {
-            Mathf.Lerp(halo.intensity, 0, 1);
-            Mathf.Lerp(shakeamount, 0, 5);
-            cloud.transform.localScale = new Vector3(cloud.transform.localScale.x / 1.001f,
-                cloud.transform.localScale.y / 1.001f, cloud.transform.localScale.z / 1.01f);
-            yield return null;
-        }
+        yield return new WaitForSeconds(3);
+        mowscript.God.UI.gameover();
         shakeamount = 0;
     }
 

@@ -15,20 +15,29 @@ public class mowscript : MonoBehaviour
     public AudioSource Bomb1, Bomb2, Plane1, Plane2, Mower;
     public AudioClip offgrass;
     public AudioClip ongrass;
+    public AudioClip bombsincoming;
     public bool enginestarted;
     public bool onfield;
+    public bool gamestarted;
 
     //gamemanager declare 
     public static class God
     {
         public static mowscript MC;
+        public static playercontroller PC;
+        public static uicontroller UI;
     }
 
     //gamemanager set
     void Awake()
     {
         God.MC = this;
+    }
+
+    public void gamestart()
+    {
         Mower.Play();
+        gamestarted = true;
     }
     void Update()
     {
@@ -54,7 +63,7 @@ public class mowscript : MonoBehaviour
             //cut closest grass
             t.mow();
         }
-        if (Mower.isPlaying == false)
+        if (Mower.isPlaying == false && gamestarted==true)
         {
             enginestarted = true;
             Mower.Play();
@@ -82,6 +91,7 @@ public class mowscript : MonoBehaviour
                     Plane2.Play();
                     dropped = true;
                 }
+                Mower.PlayOneShot(bombsincoming);
             }
         }
     }
@@ -94,9 +104,11 @@ public class mowscript : MonoBehaviour
     {
         onfield = false;
     }
+    
 
     public void bombdeto()
     {
+        Mower.Stop();
         foreach (nukecont N in nukes)
         {
             N.detonate();
