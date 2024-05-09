@@ -15,6 +15,7 @@ public class nukecont : MonoBehaviour
     public GameObject cam;
     public float shakeamount;
     public Rigidbody house,fan;
+    public bool deto = false ;
 
     public void Start()
     {
@@ -37,7 +38,6 @@ public class nukecont : MonoBehaviour
             StartCoroutine(pop());
             house.AddForce(100,50,-5,ForceMode.Impulse);
             fan.AddForce(100,50,-5,ForceMode.Impulse);
-            
     }
     public IEnumerator pop()
     {
@@ -59,6 +59,10 @@ public class nukecont : MonoBehaviour
 
     public void Update()
     {
-        cam.transform.localPosition = new Vector3(Random.Range(shakeamount,-shakeamount),Random.Range(shakeamount,-shakeamount)+0.51f,Random.Range(shakeamount,-shakeamount));
+        if (deto == true)
+        {
+            cam.transform.localPosition = new Vector3(Random.Range(shakeamount, -shakeamount),
+                Random.Range(shakeamount, -shakeamount) + 0.51f, Random.Range(shakeamount, -shakeamount));
+        }
     }
 }

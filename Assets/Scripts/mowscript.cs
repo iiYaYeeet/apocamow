@@ -47,10 +47,10 @@ public class mowscript : MonoBehaviour
         foreach (grasscont t in grasses)
         {
             // x and z limit
-            if (t.transform.position.z >= transform.position.z + 2f ||
-                t.transform.position.z <= transform.position.z - 2f) continue;
-            if (t.transform.position.x >= transform.position.x + 2f ||
-                t.transform.position.x <= transform.position.x - 2f) continue;
+            if (t.transform.position.z >= transform.position.z + 1.5f ||
+                t.transform.position.z <= transform.position.z - 1.5f) continue;
+            if (t.transform.position.x >= transform.position.x + 1.5f ||
+                t.transform.position.x <= transform.position.x - 1.5f) continue;
             //get dist
             float dist = Vector3.Distance(transform.position, t.transform.position);
             //if its 1.5 away, cont

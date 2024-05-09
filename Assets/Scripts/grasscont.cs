@@ -56,9 +56,9 @@ public class grasscont : MonoBehaviour
         {
             if (!growing) yield break;
             //grow at random amount and random time
-            pos += Random.Range(0.005f, 0.015f);
+            pos += Random.Range(0.003f, 0.013f);
             cuttable = true;
-            yield return new WaitForSeconds(Random.Range(1,1.75f));
+            yield return new WaitForSeconds(Random.Range(1,2f));
         }
         mowscript.God.MC.tootallgrass.Add(this);
     }

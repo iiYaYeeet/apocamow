@@ -27,6 +27,8 @@ public class uicontroller : MonoBehaviour
 
     public void restart()
     {
+        AudioListener.pause = false;
+        AudioListener.volume = 1;
         SceneManager.LoadScene("SampleScene");
     }
 
@@ -40,25 +42,25 @@ public class uicontroller : MonoBehaviour
         }
         while (loredumptext.alpha < 1)
         {
-            loredumptext.alpha += 0.25f;
+            loredumptext.alpha += 0.1f;
             yield return null;
         }
         yield return new WaitForSeconds(5);
         while (loredumptext.alpha > 0)
         {
-            loredumptext.alpha -= 0.25f;
+            loredumptext.alpha -= 0.1f;
             yield return null;
         }
         mowscript.God.MC.gamestart();
         while (younuketext.alpha < 1)
         {
-            younuketext.alpha += 0.25f;
+            younuketext.alpha += 0.1f;
             yield return null;
         }
         yield return new WaitForSeconds(5);
         while (younuketext.alpha > 0)
         {
-            younuketext.alpha -= 0.25f;
+            younuketext.alpha -= 0.1f;
             yield return null;
         }
         yield return new WaitForSeconds(1);
@@ -76,7 +78,8 @@ public class uicontroller : MonoBehaviour
     {
         while (whiteoverlay.alpha < 1)
         {
-            whiteoverlay.alpha += 0.05f;
+            whiteoverlay.alpha += 0.003f;
+            AudioListener.volume -= 0.1f;
             yield return null;
         }
         mowscript.God.PC.gend();

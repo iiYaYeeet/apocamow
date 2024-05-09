@@ -17,10 +17,17 @@ public class playercontroller : MonoBehaviour
     //objs
     public Camera Eyes;
     public bool gamerunning;
+    public Vector3 camPos;
+    public Vector3 restPosition; //local position where your camera would rest when it's not bobbing.
+    public float transitionSpeed = 10f; //smooths out the transition from moving to not moving.
+    public float bobSpeed = 4.8f; //how quickly the player's head bobs.
+    public float bobAmount = 0.05f; //how dramatic the bob is. Increasing this in conjunction with bobSpeed gives a nice effect for sprinting.
+    float timer = Mathf.PI / 2; //initialized as this value because this is where sin = 1. So, this will make the camera always start at the crest of the sin wave, simulating someone picking up their foot and starting to walk--you experience a bob upwards when you start walking as your foot pushes off the ground, the left and right bobs come as you walk.
     
     void Awake()
     {
         mowscript.God.PC = this;
+        camPos = transform.localPosition;
     }
 
     public void gstart()
@@ -36,6 +43,22 @@ public class playercontroller : MonoBehaviour
     {
         if (gamerunning == true)
         {
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)) //moving
+            {
+                timer += bobSpeed * Time.deltaTime;
+                Vector3 newPosition = new Vector3(Mathf.Cos(timer) * bobAmount, restPosition.y + Mathf.Abs((Mathf.Sin(timer) * bobAmount)), restPosition.z); //abs val of y for a parabolic path
+                camPos = newPosition;
+            }
+            else
+            {
+                timer = Mathf.PI / 2;
+
+                Vector3 newPosition = new Vector3(Mathf.Lerp(camPos.x, restPosition.x, transitionSpeed * Time.deltaTime), Mathf.Lerp(camPos.y, restPosition.y, transitionSpeed * Time.deltaTime), Mathf.Lerp(camPos.z, restPosition.z, transitionSpeed * Time.deltaTime)); //transition smoothly from walking to stopping.
+                camPos = newPosition;
+            }
+            Eyes.transform.localPosition = camPos;
+            if (timer > Mathf.PI * 2) //completed a full cycle on the unit circle. Reset to 0 to avoid bloated values.
+                timer = 0;
             //get mouseaxi
             float xRot = Input.GetAxis("Mouse X") * MouseSensitivity;
             float yRot = -Input.GetAxis("Mouse Y") * MouseSensitivity;
