@@ -103,7 +103,7 @@ public class playercontroller : MonoBehaviour
                 //setspeed
                 move = move.normalized * WalkSpeed;
                 //plug back in
-                RB.velocity = move;
+                RB.linearVelocity = move;
             }
         }
     }
